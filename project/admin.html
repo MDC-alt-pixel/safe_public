@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - UrbanReport</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Safecitizen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signalement.html">Signaler</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <h1 class="mb-4">Gestion des signalements</h1>
+        
+        <ul class="nav nav-tabs mb-4" id="reportTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#pending">
+                    En attente <span class="badge bg-warning" id="pendingCount">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#inProgress">
+                    En cours <span class="badge bg-info" id="inProgressCount">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#resolved">
+                    Résolus <span class="badge bg-success" id="resolvedCount">0</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="reportsContent">
+            <!-- En attente -->
+            <div class="tab-pane fade show active" id="pending">
+                <div class="report-list" id="pendingReports">
+                    <!-- Les signalements en attente seront chargés dynamiquement ici -->
+                </div>
+            </div>
+
+            <!-- En cours -->
+            <div class="tab-pane fade" id="inProgress">
+                <div class="report-list" id="inProgressReports">
+                    <!-- Les signalements en cours seront chargés dynamiquement ici -->
+                </div>
+            </div>
+
+            <!-- Résolus -->
+            <div class="tab-pane fade" id="resolved">
+                <div class="report-list" id="resolvedReports">
+                    <!-- Les signalements résolus seront chargés dynamiquement ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function loadReports() {
+            const response = await fetch("signalements.json");
+            const signalements = await response.json();
+
+            const pendingReports = [];
+            const inProgressReports = [];
+            const resolvedReports = [];
+
+            signalements.forEach(report => {
+                const reportElement = `
+                    <div class="report-card mb-3">
+                        <h5>${report.title}</h5>
+                        <p>${report.description}</p>
+                        <small><i class="bi bi-pin-map"></i> ${report.location}</small>
+                    </div>
+                `;
+                
+                switch (report.status) {
+                    case "pending":
+                        pendingReports.push(reportElement);
+                        break;
+                    case "in-progress":
+                        inProgressReports.push(reportElement);
+                        break;
+                    case "resolved":
+                        resolvedReports.push(reportElement);
+                        break;
+                }
+            });
+
+            // Mise à jour du contenu et des badges
+            document.getElementById('pendingReports').innerHTML = pendingReports.join('');
+            document.getElementById('inProgressReports').innerHTML = inProgressReports.join('');
+            document.getElementById('resolvedReports').innerHTML = resolvedReports.join('');
+
+            document.getElementById('pendingCount').textContent = pendingReports.length;
+            document.getElementById('inProgressCount').textContent = inProgressReports.length;
+            document.getElementById('resolvedCount').textContent = resolvedReports.length;
+        }
+
+        // Charger les signalements lorsque la page est prête
+        loadReports();
+    </script>
+</body>
+</html>

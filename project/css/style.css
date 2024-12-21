@@ -1,0 +1,92 @@
+:root {
+    --primary: #198754;
+    --primary-dark: #146c43;
+    --primary-light: #e9f7ef;
+}
+
+body {
+    padding-top: 76px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+}
+
+/* Feature Icons */
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+/* Report Cards */
+.report-card {
+    transition: transform 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+}
+
+.report-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.report-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+}
+
+/* Stats Cards */
+.stats-cards {
+    margin-top: 3rem;
+}
+
+/* Map Container */
+#map {
+    height: 400px;
+    border-radius: 0.5rem;
+}
+
+/* Form Styles */
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+/* Custom Buttons */
+.btn-success {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-success:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Status Badges */
+.badge-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-in-progress {
+    background-color: #0dcaf0;
+    color: #000;
+}
+
+.badge-resolved {
+    background-color: var(--primary);
+    color: #fff;
+}
